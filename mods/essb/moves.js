@@ -86,57 +86,33 @@ exports.BattleMovedex = {
 		type: "Normal",
 	},
 	//flufi
-	"hydraulicblast": {
-		id: "hydraulicblast",
-		name: "Hydraulic Blast",
-		flags: {
-			protect: 1,
-			mirror: 1,
+	"fluffblast": {
+		id: "fluffblast",
+		name: "Fluff Blast",
+		self: {
+			boosts: {
+				def: 1,
+				spd: 1,
+				spe: 1,
+			},
 		},
 		secondary: false,
 		category: "Special",
 		onHit: function (target, source, move) {
-			this.add('c|%flufi|Too much water');
+			this.add('c|%flufi|Suffocate on my fluff!');
 		},
-		onPrepareHit: function (target, source) {
-			this.attrLastMove('[still]');
-			this.add('-anim', source, "Water Pulse", target);
-		},
-		basePower: 100,
-		pp: 15,
-		accuracy: 90,
-		target: "normal",
-		type: "Water",
-		zMovePower: 135,
-		contestType: "Cool",
-	},
-	//flufi
-	"oceanicsong": {
-		id: "oceanicsong",
-		name: "Oceanic Song",
-		flags: {
-			protect: 1,
-			mirror: 1,
-		},
-		secondary: false,
-		status: 'slp',
-		category: "Special",
-		onHit: function (target, source, move) {
-			this.add('c|%flufi|ToOO MuCCH waATeR!1!!!!11!1!!');
-			this.add('c|~Insist|More like too much edge.....');
-		},
-		isZ: "hydriumz",
 		onPrepareHit: function (target, source) {
 			this.attrLastMove('[still]');
 			this.add('-anim', source, "Sing", target);
+			this.add('-anim', source, "Spike Cannon", target);
 		},
-		basePower: 135,
-		pp: 0.625,
+		basePower: 80,
+		pp: 10,
 		accuracy: 100,
 		target: "normal",
-		type: "Water",
-		zMovePower: 200,
-		contestType: "Cool",
+		type: "Steel",
+		zMovePower: 125,
+		contestType: "Cute",
 	},
 	//cieltsnow
 	"pimpslap": {
@@ -862,25 +838,24 @@ exports.BattleMovedex = {
 		isZ: "thekidz",
 	},
 	//VXN
-	"psychocrusher": {
+	"insectplague": {
 		accuracy: 100,
-		basePower: 120,
+		basePower: 80,
 		category: "Physical",
-		id: "psychocrusher",
-		name: "Psycho Crusher",
+		id: "insectplague",
+		name: "Insect Plague",
 		pp: 10,
 		priority: 0,
 		flags: {contact: 1, protect: 1, mirror: 1},
 		onPrepareHit: function (target, source) {
 			this.attrLastMove('[still]');
-			this.add('-anim', source, "Darkest Lariat", target);
+			this.add('-anim', source, "Attack Order", target);
 		},
 		ignoreEvasion: true,
 		ignoreDefensive: true,
-		ignoreImmunity: {'Psychic': true},
 		secondary: false,
 		target: "normal",
-		type: "Psychic",
+		type: "Bug",
 	},
 	//HoeenHero
 	"scripting": {
@@ -1385,29 +1360,20 @@ exports.BattleMovedex = {
 		zMovePower: 190,
 		contestType: "Cool",
 	},
-	"outripper": {
+	"itsmytimenow": {
+		id: "itsmytimenow",
+		name: "It's My Time Now",
 		accuracy: 100,
 		basePower: 150,
-		category: "Physical",
-		id: "outripper",
-		isViable: true,
-		name: "Outripper",
+		category: "Special",
 		pp: 10,
 		priority: 0,
-		flags: {contact: 1, protect: 1, mirror: 1},
-		self: {
-			volatileStatus: 'lockedmove',
-		},
-		onAfterMove: function (pokemon) {
-			if (pokemon.volatiles['lockedmove'] && pokemon.volatiles['lockedmove'].duration === 1) {
-				pokemon.removeVolatile('lockedmove');
-			}
-		},
+		flags: {protect: 1, mirror: 1, sound: 1, authentic: 1},
 		secondary: false,
-		target: "randomNormal",
-		type: "Dragon",
-		zMovePower: 190,
-		contestType: "Cool",
+		target: "allAdjacent",
+		type: "Bug",
+		zMovePower: 200,
+		contestType: "Tough",
 	},
 	"cripplinghazards": {
 		id: "cripplinghazards",
@@ -1702,5 +1668,28 @@ exports.BattleMovedex = {
 		type: "Flying",
 		zMovePower: 140,
 		contestType: "Tough",
+	},
+	"stabstab": {
+		category: "Physical",
+		basePower: 100,
+		accuracy: true,
+		desc: 'Stabby\'s Signature move which always hits. Hits Twice.',
+		id: "stabstab",
+		isNonstandard: true,
+		name: "Stab Stab",
+		secondary: {
+			chance: 25,
+			volatileStatus: 'flinch',
+		},
+		pp: 5,
+		priority: 0,
+		multihit: [2, 2],
+		onPrepareHit: function (target, source, move) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Swords Dance", source);
+			this.add('-anim', source, "Sacred Sword", target);
+		},
+		target: "normal",
+		type: "Steel",
 	},
 };

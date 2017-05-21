@@ -144,6 +144,7 @@ exports.BattleAbilities = {
 	"3bawlky5u": {
 		id: "3bawlky5u",
 		name: "3Bawlky5U",
+		isUnbreakable: true,
 		//prankster
 		onModifyPriority: function (priority, pokemon, target, move) {
 			if (move && move.category === 'Status') {
@@ -348,6 +349,15 @@ exports.BattleAbilities = {
 			if (source && source !== target && move && move.flags['contact']) {
 				this.damage(source.maxhp / 8, source, target);
 			}
+		},
+	},
+	//flufi
+	"thewaggling": {
+		id: "thewaggling",
+		name: "The Waggling",
+		onStart: function (pokemon) {
+			this.useMove("Metronome", pokemon);
+			this.useMove("Metronome", pokemon);
 		},
 	},
 	//astralwobz
@@ -1094,8 +1104,23 @@ exports.BattleAbilities = {
 		name: "DesertDragon",
 		onSourceFaint: function (target, source, effect) {
 			if (effect && effect.effectType === 'Move') {
-				this.boost({atk:2, spe: 2}, source);
+				this.boost({spa:2, spe: 2}, source);
 			}
+		},
+		//Insectize
+		onModifyMovePriority: -1,
+		onModifyMove: function (move, pokemon) {
+			if (move.type === 'Normal' && move.id !== 'naturalgift' && !move.isZ) {
+				move.type = 'Bug';
+				if (move.category !== 'Status') pokemon.addVolatile('insectize');
+			}
+		},
+		effect: {
+			duration: 1,
+			onBasePowerPriority: 8,
+			onBasePower: function (basePower, pokemon, target, move) {
+				return this.chainModify([0x1333, 0x1000]);
+			},
 		},
 	},
 	"defense": {
@@ -1383,6 +1408,21 @@ exports.BattleAbilities = {
 		//ignores abilities
 		onModifyMove: function (move) {
 			move.ignoreAbility = true;
+		},
+	},
+	//Stabby the Krabby
+	"readytostab": {
+		id: "readytostab",
+		name: "Ready to Stab",
+		onStart: function (pokemon) {
+			let foeactive = pokemon.side.foe.active;
+			for (let i = 0; i < foeactive.length; i++) {
+				if (foeactive[i].volatiles['substitute']) {
+					this.add('-immune', foeactive[i], '[msg]');
+				} else {
+					this.boost({atk: 2, spe: 2});
+				}
+			}
 		},
 	},
 };

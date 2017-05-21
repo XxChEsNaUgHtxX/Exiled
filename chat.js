@@ -264,7 +264,6 @@ class CommandContext {
 						this.user.sendTo(this.room, (this.room.type === 'chat' ? '|c:|' + (~~(Date.now() / 1000)) + '|' : '|c|') + this.user.getIdentity(this.room.id) + '|' + message);
 					} else {
 						this.room.add(`|c|${this.user.getIdentity(this.room.id)}|${message}`).update();
-						Exiled.addExp(this.user, this.room, 1);
 					}
 				}
 			}
@@ -389,7 +388,7 @@ class CommandContext {
 				message: this.message,
 			});
 			Rooms.global.reportCrash(err);
-			this.sendReply(`|html|<div class="broadcast-red"><b>Pokemon Showdown crashed!</b><br />Don't worry, we\'re working on fixing it.</div>`);
+			this.sendReply(`|html|<div class="broadcast-red"><b>Exiled crashed!</b><br />Don't worry, we\'re working on fixing it.</div>`);
 		}
 		if (result === undefined) result = false;
 

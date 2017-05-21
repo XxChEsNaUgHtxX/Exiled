@@ -1,7 +1,6 @@
 tournaments/lib/
 logs/
 dev-tools/globals.js
-config/color.js
 mods/opmetagame
 chat-plugins/profile.js
 chat-plugins/gangs.js
